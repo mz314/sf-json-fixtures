@@ -1,6 +1,6 @@
 <?php
 
-namespace Spraed\PDFGeneratorBundle;
+namespace MZ314\JSonFixturesBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

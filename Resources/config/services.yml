@@ -1,0 +1,9 @@
+services:
+    
+    jsonfixtures.loader:
+       class: MZ314\JSonFixturesBundle\Services\LoaderService
+       arguments:
+           
+    jsonfixtures.dumper:
+        class: MZ314\JSonFixturesBundle\Services\DumperService
+           
