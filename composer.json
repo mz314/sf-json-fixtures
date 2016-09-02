@@ -1,0 +1,29 @@
+{
+    "name":        "mz314/sf-json-fixtures",
+    "type":        "symfony-bundle",
+    "description": "This bundle allows to dump and restore fixtures from json files. In similar fashion as Django fixtures work.",
+    "keywords":    ["fixtures", "django", "json"],
+    "homepage":    "https://github.com/mz314/sf-json-fixtures",
+    "license":     "MIT",
+
+    "authors": [
+        {
+            "name": "Maciej Zakrzewski",
+            "homepage": "https://github.com/mz314"
+        }
+       
+    ],
+
+    "require": {
+        "php":                      ">=5.5.0",
+        "symfony/framework-bundle": "~2.3|~3.0"
+    },
+
+    "autoload": {
+        "psr-0": {
+            "MZ314\\JSonFixturesBundle": ""
+        }
+    },
+
+    "target-dir": "MZ314/JSonFixturesBundle"
+}
