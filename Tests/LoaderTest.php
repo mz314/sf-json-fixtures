@@ -7,11 +7,25 @@ class LoaderTest extends BaseTestCase
 {
     public function setUp()
     {
-        $this->loader = new LoaderService();
+        parent::setUp();
+
+        $this->loader = new LoaderService($this->em);
+        
     }
 
     public function testLoaderParsing()
     {
+
+        $json = file_get_contents(__DIR__.'/json/TestEntitySimpleReplace.json');
+        $data = $this->loader->loadJsonData($json);
+      
+        $this->assertEquals($data->entityName, 'TestEntity');
+        $this->assertEquals($data->mode, 'replace');
+        $this->assertEquals(count($data->entries), 2);
+        $this->assertTrue(is_array($data->entries));
+        $a =["id"=>0, "name"=> "test1"];
+        $b = ["id"=>1, "name"=> "test2"];
+        $this->assertEquals($data->entries, [(object)$a, (object)$b]);
         
     }
 }

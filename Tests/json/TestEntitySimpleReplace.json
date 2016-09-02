@@ -1,0 +1,8 @@
+{
+ "entityName": "TestEntity",
+ "mode": "replace", 
+ "entries":  [
+     {"id":0, "name": "test1"},
+     {"id":1, "name": "test2"}
+ ]
+}
