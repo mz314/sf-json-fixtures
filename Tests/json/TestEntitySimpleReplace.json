@@ -1,4 +1,5 @@
 {
+ "namespace": "MZ314:JSonFixturesBundle:Tests:Entity",
  "entityName": "TestEntity",
  "mode": "replace", 
  "entries":  [
