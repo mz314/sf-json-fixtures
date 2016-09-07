@@ -1,9 +1,11 @@
 {
  "namespace": "MZ314:JSonFixturesBundle:Tests:Entity",
  "entityName": "TestEntity",
- "mode": "replace", 
+ "mode": "replace",
+ "pkForce": true,
+ "pkName": "id",
  "entries":  [
-     {"id":0, "name": "test1"},
-     {"id":1, "name": "test2"}
+     {"id":6, "name": "test1"},
+     {"id":7, "name": "test2"}
  ]
 }

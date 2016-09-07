@@ -14,6 +14,23 @@ class LoaderService
         $this->em = $em;
     }
 
+    protected function addDefaults($data) {
+        $defaults = [
+            'namespace'=>'',
+            'pkForce'=>false,
+            'mode'=>'replace',
+            'entries'=>[],
+        ];
+
+        foreach($defaults as $key=>$def) {
+            if(!isset($data->$key)) {
+                $data->$key = $def;
+            }
+        }
+
+        return $data;
+    }
+
     public function loadJsonData($json)
     {
         $data = json_decode($json);
@@ -22,7 +39,9 @@ class LoaderService
             throw new JSONParseException($json);
         }
 
-        if (isset($data->namespace)) {
+        $data = $this->addDefaults($data);
+
+        if (!empty($data->namespace)) {
             $data->namespace = str_replace(":", "\\", $data->namespace);
         } else {
             $data->namespace = null;
@@ -50,19 +69,9 @@ class LoaderService
 
         $entityClassName = $nsPrefix.$data->entityName;
 
-        //http://php.net/manual/pl/class.reflectionclass.php
-        //http://php.net/manual/pl/reflectionproperty.setvalue.php
-        //http://stackoverflow.com/questions/6448551/is-there-any-way-to-set-a-private-protected-static-property-using-reflection-cla
-
-
         if ($data->mode == 'replace') {
             
         }
-
-//        $test = new TestEntity();
-//        $test->setName('test');
-//        $this->em->persist($test);
-        
 
         foreach ($data->entries as $entry) {
             $entryArr = (array) $entry;
@@ -73,10 +82,13 @@ class LoaderService
                 $reflection->setAccessible(true);
                 $reflection->setValue($entity, $val);
             }
-           // var_dump($entity);
+
+
+            if ($data->pkForce) {
+              $this->em->getClassMetaData(get_class($entity))->setIdGeneratorType(\Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_NONE);
+            }
+
             $this->em->persist($entity);
         }
-
-        //$this->em->flush(); // this shouldn't be here, but leaving it for now
     }
 }
