@@ -3,6 +3,7 @@
 namespace MZ314\JSonFixturesBundle\Services;
 
 use MZ314\JSonFixturesBundle\Exception\JSONParseException;
+use MZ314\JSonFixturesBundle\Tests\Entity\TestEntity;
 
 class LoaderService
 {
@@ -17,12 +18,12 @@ class LoaderService
     {
         $data = json_decode($json);
 
-        if(is_null($data)) {
+        if (is_null($data)) {
             throw new JSONParseException($json);
         }
 
-        if(isset($data->namespace)) {
-           $data->namespace = str_replace(":", "\\", $data->namespace);
+        if (isset($data->namespace)) {
+            $data->namespace = str_replace(":", "\\", $data->namespace);
         } else {
             $data->namespace = null;
         }
@@ -37,14 +38,13 @@ class LoaderService
         return $this->loadJsonData($json);
     }
 
-
-    public function loadEntityFromJson($json)
+    public function loadFromJson($json)
     {
         $data = $this->loadJsonData($json);
 
         $nsPrefix = '';
 
-        if(!empty($data->namespace)) {
+        if (!empty($data->namespace)) {
             $nsPrefix = $data->namespace.'\\';
         }
 
@@ -54,24 +54,29 @@ class LoaderService
         //http://php.net/manual/pl/reflectionproperty.setvalue.php
         //http://stackoverflow.com/questions/6448551/is-there-any-way-to-set-a-private-protected-static-property-using-reflection-cla
 
-        $refClass = new \ReflectionClass($entityClassName);
 
-        var_dump($refClass);
-
-        foreach($data->entries as $entry) {
-            $entryArr = (array)$entry;
-            $entity = new $entityClassName(); //TODO: make it work with parametered constructors
-            foreach($entryArr as $key=>$val) {
-                $property = $refClass->getProperty($key);
-                $property->setValue($entity, $property);
-            }
-
-            var_dump($entry);
+        if ($data->mode == 'replace') {
+            
         }
+
+//        $test = new TestEntity();
+//        $test->setName('test');
+//        $this->em->persist($test);
         
+
+        foreach ($data->entries as $entry) {
+            $entryArr = (array) $entry;
+            $entity   = new $entityClassName(); //TODO: make it work with parametered constructors
+            // var_dump($entity);
+            foreach ($entryArr as $key => $val) {
+                $reflection = new \ReflectionProperty(get_class($entity), $key);
+                $reflection->setAccessible(true);
+                $reflection->setValue($entity, $val);
+            }
+           // var_dump($entity);
+            $this->em->persist($entity);
+        }
+
+        //$this->em->flush(); // this shouldn't be here, but leaving it for now
     }
-
-    
-
 }
-

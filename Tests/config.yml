@@ -1,0 +1,21 @@
+framework:
+    secret: test
+    session:
+        storage_id: session.storage.mock_file
+
+doctrine:
+    dbal: 
+        driver: pdo_sqlite 
+        memory: true
+        charset: UTF8
+    orm:
+        auto_generate_proxy_classes: "%kernel.debug%"
+        mappings:
+            JSonFixturesBundle:
+                mapping: true
+                type: annotation
+                dir: 'Tests/Entity'
+                alias: 'JSonFixturesBundle'
+                prefix: 'MZ314\JSonFixturesBundle\Tests\Entity'
+                is_bundle: true
+        

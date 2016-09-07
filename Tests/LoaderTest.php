@@ -33,12 +33,12 @@ class LoaderTest extends BaseTestCase
         $this->assertFalse(is_null($data));
     }
 
-    public function testLoadingEntity()
+    public function testLoading()
     {
         $json = file_get_contents(__DIR__.'/json/TestEntitySimpleReplace.json');
-        
+       
 
-        $this->loader->loadEntityFromJson($json);
+        $this->loader->loadFromJson($json);
     }
 }
 
