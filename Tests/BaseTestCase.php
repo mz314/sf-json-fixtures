@@ -34,47 +34,8 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
         $this->em = $kernel->getContainer()->get('doctrine')->getManager();
 
         $this->executeCommand($application, "doctrine:schema:create");
-      //  $this->executeCommand($application, "doctrine:schema:update");
-        
 
-
-//        $xmlDriver = new \Doctrine\ORM\Mapping\Driver\AnnotationDriver('AnnotationReader', __DIR__.'/Entity');
-//
-//        $config->expects($this->any())
-//            ->method('getMetadataCacheImpl')
-//            ->will($this->returnValue($cache));
-//        $config->expects($this->any())
-//            ->method('getQueryCacheImpl')
-//            ->will($this->returnValue($cache));
-//        $config->expects($this->once())
-//            ->method('getProxyDir')
-//            ->will($this->returnValue(sys_get_temp_dir()));
-//        $config->expects($this->once())
-//            ->method('getProxyNamespace')
-//            ->will($this->returnValue('Proxy'));
-//        $config->expects($this->once())
-//            ->method('getAutoGenerateProxyClasses')
-//            ->will($this->returnValue(true));
-//        $config->expects($this->any())
-//            ->method('getMetadataDriverImpl')
-//            ->will($this->returnValue($xmlDriver));
-//        $config->expects($this->any())
-//            ->method('getClassMetadataFactoryName')
-//            ->will($this->returnValue('Doctrine\ORM\Mapping\ClassMetadataFactory'));
-//        $config->expects($this->any())
-//            ->method('getDefaultRepositoryClassName')
-//            ->will($this->returnValue('Doctrine\ORM\EntityRepository'));
-//        $config->expects($this->any())
-//            ->method('getRepositoryFactory')
-//            ->will($this->returnValue(new \Doctrine\ORM\Repository\DefaultRepositoryFactory()));
-//        $config->expects($this->any())
-//            ->method('getQuoteStrategy')
-//            ->will($this->returnValue(new \Doctrine\ORM\Mapping\DefaultQuoteStrategy()));
-//        $this->em = \Doctrine\ORM\EntityManager::create($conn, $config);
     }
 
-    public function testSomething()
-    {
-        
-    }
+   
 }
