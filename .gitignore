@@ -4,3 +4,4 @@
 /Tests/autoload.php
 /vendor/
 /Tests/cache
+composer.lock
