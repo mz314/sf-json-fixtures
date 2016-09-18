@@ -4,6 +4,7 @@ namespace MZ314\JSonFixturesBundle\Tests;
 
 use MZ314\JSonFixturesBundle\Services\DumperService;
 use MZ314\JSonFixturesBundle\Services\LoaderService;
+use MZ314\JSonFixturesBundle\Services\Helpers\JsonHelper;
 
 class DumperTest extends BaseTestCase
 {
@@ -11,9 +12,9 @@ class DumperTest extends BaseTestCase
     public function setUp()
     {
         parent::setUp();
-
-        $this->dumper = new DumperService($this->em);
-        $this->loader = new LoaderService($this->em);
+        $helper = new JsonHelper();
+        $this->dumper = new DumperService($this->em, $helper);
+        $this->loader = new LoaderService($this->em, $helper);
 
     }
 

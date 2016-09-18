@@ -3,7 +3,14 @@ services:
     jsonfixtures.loader:
        class: MZ314\JSonFixturesBundle\Services\LoaderService
        arguments:
+           - "@doctrine.orm.entity_manager"
+           - '@jsonfixtures.format.json'
            
     jsonfixtures.dumper:
         class: MZ314\JSonFixturesBundle\Services\DumperService
-           
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@jsonfixtures.format.json"
+
+    jsonfixtures.format.json:
+       class: MZ314\JSonFixturesBundle\Services\Helpers\JsonHelper

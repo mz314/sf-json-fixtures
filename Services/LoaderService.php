@@ -4,26 +4,35 @@ namespace MZ314\JSonFixturesBundle\Services;
 
 use MZ314\JSonFixturesBundle\Exception\JSONParseException;
 use MZ314\JSonFixturesBundle\Tests\Entity\TestEntity;
-
+use MZ314\JSonFixturesBundle\Services\Helpers\JsonHelper;
+/**
+ * TODO:
+ * add dependency param and/or next in json fixture to chain fixtures
+ * move addDefaults method so it will be available for dumper too
+ */
 class LoaderService
 {
+
     protected $em;
 
-    public function __construct($em)
+    public function __construct($em, JsonHelper $jsonHelper)
     {
         $this->em = $em;
+        $this->jsonHelper = $jsonHelper;
+        
     }
 
-    protected function addDefaults($data) {
+    protected function addDefaults($data)
+    {
         $defaults = [
-            'namespace'=>'',
-            'pkForce'=>false,
-            'mode'=>'replace',
-            'entries'=>[],
+            'namespace' => '',
+            'pkForce' => false,
+            'mode' => 'replace',
+            'entries' => [],
         ];
 
-        foreach($defaults as $key=>$def) {
-            if(!isset($data->$key)) {
+        foreach ($defaults as $key => $def) {
+            if (!isset($data->$key)) {
                 $data->$key = $def;
             }
         }
@@ -64,10 +73,10 @@ class LoaderService
         $nsPrefix = '';
 
         if (!empty($data->namespace)) {
-            $nsPrefix = $data->namespace.'\\';
+            $nsPrefix = $data->namespace . '\\';
         }
 
-        $entityClassName = $nsPrefix.$data->entityName;
+        $entityClassName = $nsPrefix . $data->entityName;
 
         if ($data->mode == 'replace') {
             
@@ -75,7 +84,7 @@ class LoaderService
 
         foreach ($data->entries as $entry) {
             $entryArr = (array) $entry;
-            $entity   = new $entityClassName(); //TODO: make it work with parametered constructors
+            $entity = new $entityClassName(); //TODO: make it work with parametered constructors
             // var_dump($entity);
             foreach ($entryArr as $key => $val) {
                 $reflection = new \ReflectionProperty(get_class($entity), $key);
@@ -85,7 +94,7 @@ class LoaderService
 
 
             if ($data->pkForce) {
-              $this->em->getClassMetaData(get_class($entity))->setIdGeneratorType(\Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_NONE);
+                $this->em->getClassMetaData(get_class($entity))->setIdGeneratorType(\Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_NONE);
             }
 
             $this->em->persist($entity);

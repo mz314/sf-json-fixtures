@@ -10,16 +10,16 @@ use Doctrine\Common\Annotations\AnnotationRegistry;
 
 class BaseTestCase extends \PHPUnit_Framework_TestCase
 {
-    protected $em;
+    protected $em, $application;
 
-    protected function executeCommand($application, $command,
+    protected function executeCommand($command,
                                       Array $options = array())
     {
         $options["--env"]   = "test";
         $options["--quiet"] = true;
         $options            = array_merge($options, array('command' => $command));
 
-        $application->run(new ArrayInput($options));
+        $this->application->run(new ArrayInput($options));
     }
 
     public function setUp()
@@ -28,12 +28,12 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
         AnnotationRegistry::registerFile(__DIR__ . '/../vendor/doctrine/orm/lib/Doctrine/ORM/Mapping/Driver/DoctrineAnnotations.php');
         $kernel      = new AppKernel('test', true); // create a "test" kernel
         $kernel->boot();
-        $application = new Application($kernel);
-        $application->setAutoExit(false);
+        $this->application = new Application($kernel);
+        $this->application->setAutoExit(false);
 
         $this->em = $kernel->getContainer()->get('doctrine')->getManager();
 
-        $this->executeCommand($application, "doctrine:schema:create");
+        $this->executeCommand("doctrine:schema:create");
 
     }
 

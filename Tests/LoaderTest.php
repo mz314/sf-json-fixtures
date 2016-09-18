@@ -3,6 +3,7 @@
 namespace MZ314\JSonFixturesBundle\Tests;
 
 use MZ314\JSonFixturesBundle\Services\LoaderService;
+use MZ314\JSonFixturesBundle\Services\Helpers\JsonHelper;
 
 class LoaderTest extends BaseTestCase
 {
@@ -10,8 +11,10 @@ class LoaderTest extends BaseTestCase
     public function setUp()
     {
         parent::setUp();
+        
+        //TODO: get service using application->container->get
 
-        $this->loader = new LoaderService($this->em);
+        $this->loader = new LoaderService($this->em, new JsonHelper());
     }
 
     public function testLoaderParsing()
