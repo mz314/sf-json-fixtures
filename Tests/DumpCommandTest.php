@@ -3,6 +3,9 @@
 namespace MZ314\JSonFixturesBundle\Tests;
 
 use Symfony\Component\Console\Tester\CommandTester;
+use MZ314\JSonFixturesBundle\Services\LoaderService;
+use MZ314\JSonFixturesBundle\Services\Helpers\JsonHelper;
+
 
 class DumpCommandTest extends BaseTestCase
 {
@@ -11,6 +14,10 @@ class DumpCommandTest extends BaseTestCase
     {
         parent::setUp();
         $this->application->add(new \MZ314\JSonFixturesBundle\Commands\DumpCommand());
+        $this->loader = new LoaderService($this->em, new JsonHelper());
+        $json = file_get_contents(__DIR__.'/json/TestEntitySimpleReplace.json');
+        $this->loader->loadFromJson($json);
+        $this->em->flush();
     }
 
     public function testCommand()
@@ -20,6 +27,20 @@ class DumpCommandTest extends BaseTestCase
         $commandTester->execute([
             'command' => $command->getName(),
             '--entity' => 'JSonFixturesBundle:TestEntity',]);
-        // $this->executeCommand('json-fixtures:dump JSonFixturesBundle:TestEntity');
+        $output = $commandTester->getDisplay();
+        $data = json_decode($output);
+        
+        $this->assertNotEquals(count($data), 0);
+        $this->assertEquals($data->namespace, 'MZ314:JSonFixturesBundle:Tests:Entity');
+        $this->assertEquals($data->entityName, 'TestEntity');
+        // $this->assertEquals($data->mode, 'replace');
+      //  $this->assertEquals($data->pkForce, true);
+        $this->assertEquals(isset($data->entries), true);
+        $this->assertEquals(count($data->entries), 2);
+        $this->assertEquals($data->entries[0]->id, 6);
+        $this->assertEquals($data->entries[0]->name, 'test1');
+        $this->assertEquals($data->entries[1]->id, 7);
+        $this->assertEquals($data->entries[1]->name, 'test2');
+        
     }
 }

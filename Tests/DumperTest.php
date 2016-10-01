@@ -18,12 +18,12 @@ class DumperTest extends BaseTestCase
 
     }
 
-    public function testDump()
+    public function testArrayDump()
     {
         
         $this->loader->loadFromJson(file_get_contents(__DIR__.'/json/TestEntitySimpleReplace.json'));
         $this->em->flush();
-        $json = $this->dumper->dumpToJson($this->em->getRepository('JSonFixturesBundle:TestEntity')->findAll());
+        $json = $this->dumper->dumpArrayToJson($this->em->getRepository('JSonFixturesBundle:TestEntity')->findAll());
         
         $data = json_decode($json);
         

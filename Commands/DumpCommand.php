@@ -31,7 +31,7 @@ class DumpCommand extends ContainerAwareCommand
          //$fileName = $input->getOption('file');
          $fileName = null;
          $entities = $em->getRepository($entityName)->findAll();
-         $json = $dumperService->dumpToJson($entities);
+         $json = $dumperService->dumpArrayToJson($entities);
          
         
          if(!$fileName || $fileName== 'stdout') {

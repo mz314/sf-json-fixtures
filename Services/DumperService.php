@@ -3,7 +3,8 @@
 namespace MZ314\JSonFixturesBundle\Services;
 
 use MZ314\JSonFixturesBundle\Services\Helpers\JsonHelper;
-
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 /**
  * TODO: add method using entitymanager and taking entity name as param
  */
@@ -12,7 +13,7 @@ class DumperService
 
     protected $em;
 
-    public function __construct($em, JsonHelper $jsonHelper)
+    public function __construct(EntityManager $em, JsonHelper $jsonHelper)
     {
         $this->em = $em;
         $this->jsonHelper = $jsonHelper;
@@ -33,15 +34,14 @@ class DumperService
         return $class;
     }
 
-    public function dumpToJson(Array $entities)
+    public function dumpArrayToJson(Array $entities)
     {
         $data = new \stdClass();
 
         if(count($entities) == 0) {
-            return null;
+            return "";
         }
         
-        //TODO: handle empty set, so no undefined index is thrown
         $reflection = new \ReflectionClass(get_class($entities[0]));
 
         $data->entityName = $reflection->getShortName();
@@ -55,5 +55,14 @@ class DumperService
         $json = json_encode($data);
 
         return $json;
+    }
+    
+    public function dumpRepositoryToJson(EntityRepository $repository) {
+        //TODO: use custom select * to prevent from using overriden findAll 
+        $entities = $repository->findAll(); 
+        
+        if(count($entities)>0) {
+            $this->dumpArrayToJson($entities);
+        }
     }
 }
