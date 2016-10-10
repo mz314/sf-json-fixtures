@@ -69,4 +69,15 @@ class LoaderTest extends BaseTestCase
         $this->assertEquals('TestEntity', $data->entityName);
 
     }
+
+    public function testRelated()
+    {
+        $jsonA = file_get_contents(__DIR__.'/json/ManyToOneA.json');
+        $jsonB = file_get_contents(__DIR__.'/json/ManyToOneB.json');
+
+        $this->loader->loadFromJson($jsonA);
+        $this->loader->loadFromJson($jsonB);
+
+        $this->em->flush();
+    }
 }

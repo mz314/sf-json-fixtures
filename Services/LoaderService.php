@@ -5,6 +5,7 @@ namespace MZ314\JSonFixturesBundle\Services;
 use MZ314\JSonFixturesBundle\Exception\JSONParseException;
 use MZ314\JSonFixturesBundle\Tests\Entity\TestEntity;
 use MZ314\JSonFixturesBundle\Services\Helpers\JsonHelper;
+
 /**
  * TODO:
  * add dependency param and/or next in json fixture to chain fixtures
@@ -12,32 +13,12 @@ use MZ314\JSonFixturesBundle\Services\Helpers\JsonHelper;
  */
 class LoaderService
 {
-
     protected $em;
 
     public function __construct($em, JsonHelper $jsonHelper)
     {
-        $this->em = $em;
+        $this->em         = $em;
         $this->jsonHelper = $jsonHelper;
-        
-    }
-
-    protected function addDefaults($data)
-    {
-        $defaults = [
-            'namespace' => '',
-            'pkForce' => false,
-            'mode' => 'replace',
-            'entries' => [],
-        ];
-
-        foreach ($defaults as $key => $def) {
-            if (!isset($data->$key)) {
-                $data->$key = $def;
-            }
-        }
-
-        return $data;
     }
 
     public function loadJsonData($json)
@@ -48,7 +29,7 @@ class LoaderService
             throw new JSONParseException($json);
         }
 
-        $data = $this->addDefaults($data);
+        $data = $this->jsonHelper->addDefaults($data);
 
         if (!empty($data->namespace)) {
             $data->namespace = str_replace(":", "\\", $data->namespace);
@@ -66,27 +47,44 @@ class LoaderService
         return $this->loadJsonData($json);
     }
 
-    public function loadFromObject($data) {
+    public function loadFromObject($data)
+    {
         $nsPrefix = '';
 
         if (!empty($data->namespace)) {
-            $nsPrefix = $data->namespace . '\\';
+            $nsPrefix = $data->namespace.'\\';
         }
 
-        $entityClassName = $nsPrefix . $data->entityName;
+        $entityClassName = $nsPrefix.$data->entityName;
 
         if ($data->mode == 'replace') {
 
         }
 
+
+
         foreach ($data->entries as $entry) {
             $entryArr = (array) $entry;
-            $entity = new $entityClassName(); //TODO: make it work with parametered constructors
-            // var_dump($entity);
+            $entity   = new $entityClassName(); //TODO: make it work with parametered constructors
+            $metadata = $this->em->getClassMetadata($entityClassName);
+
+
             foreach ($entryArr as $key => $val) {
+
+                $value = $val;
+
+                if (!$metadata->getTypeOfField($key)) {
+                    $mapping          = $metadata->getAssociationMapping($key);
+                    $refColName       = $mapping['joinColumns'][0]['referencedColumnName'];
+                    $targetRepository = $this->em->getRepository($mapping['targetEntity']);
+                    $value            = $targetRepository->findOneBy([
+                        $refColName => $val,
+                    ]);
+                }
+
                 $reflection = new \ReflectionProperty(get_class($entity), $key);
                 $reflection->setAccessible(true);
-                $reflection->setValue($entity, $val);
+                $reflection->setValue($entity, $value);
             }
 
             if ($data->pkForce) {
@@ -102,7 +100,5 @@ class LoaderService
         $data = $this->loadJsonData($json);
 
         $this->loadFromObject($data);
-       
-        
     }
 }

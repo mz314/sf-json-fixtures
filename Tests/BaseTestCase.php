@@ -32,7 +32,7 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
         $this->application->setAutoExit(false);
 
         $this->em = $kernel->getContainer()->get('doctrine')->getManager();
-
+        $this->container = $kernel->getContainer();
         $this->executeCommand("doctrine:schema:create");
 
     }
