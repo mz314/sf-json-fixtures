@@ -66,10 +66,7 @@ class LoaderService
         return $this->loadJsonData($json);
     }
 
-    public function loadFromJson($json)
-    {
-        $data = $this->loadJsonData($json);
-
+    public function loadFromObject($data) {
         $nsPrefix = '';
 
         if (!empty($data->namespace)) {
@@ -79,7 +76,7 @@ class LoaderService
         $entityClassName = $nsPrefix . $data->entityName;
 
         if ($data->mode == 'replace') {
-            
+
         }
 
         foreach ($data->entries as $entry) {
@@ -92,12 +89,20 @@ class LoaderService
                 $reflection->setValue($entity, $val);
             }
 
-
             if ($data->pkForce) {
                 $this->em->getClassMetaData(get_class($entity))->setIdGeneratorType(\Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_NONE);
             }
 
             $this->em->persist($entity);
         }
+    }
+
+    public function loadFromJson($json)
+    {
+        $data = $this->loadJsonData($json);
+
+        $this->loadFromObject($data);
+       
+        
     }
 }
