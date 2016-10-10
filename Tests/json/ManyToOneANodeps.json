@@ -4,9 +4,6 @@
  "mode": "replace",
  "pkForce": true,
  "pkName": "id",
- "dependencies": [
-     "Tests/json/ManyToOneB.json"
- ],
  "entries":  [
      {"id":1, "name": "rel1A", "relM": 1},
      {"id":2, "name": "rel2A", "relM": 1},

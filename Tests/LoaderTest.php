@@ -11,7 +11,7 @@ class LoaderTest extends BaseTestCase
     public function setUp()
     {
         parent::setUp();
-        
+
         //TODO: get service using application->container->get
 
         $this->loader = new LoaderService($this->em, new JsonHelper());
@@ -67,17 +67,24 @@ class LoaderTest extends BaseTestCase
         $this->assertEquals(false, $data->pkForce);
         $this->assertEquals([], $data->entries);
         $this->assertEquals('TestEntity', $data->entityName);
-
     }
 
     public function testRelated()
     {
-        $jsonA = file_get_contents(__DIR__.'/json/ManyToOneA.json');
+        $jsonA = file_get_contents(__DIR__.'/json/ManyToOneANodeps.json');
         $jsonB = file_get_contents(__DIR__.'/json/ManyToOneB.json');
 
-        $this->loader->loadFromJson($jsonA);
         $this->loader->loadFromJson($jsonB);
+        $this->em->flush();
 
+        $this->loader->loadFromJson($jsonA);
+        $this->em->flush();
+    }
+
+    public function testDependencies()
+    {
+        $jsonA = file_get_contents(__DIR__.'/json/ManyToOneA.json');
+        $this->loader->loadFromJson($jsonA);
         $this->em->flush();
     }
 }

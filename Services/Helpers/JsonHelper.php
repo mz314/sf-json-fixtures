@@ -1,18 +1,22 @@
 <?php
+
 namespace MZ314\JSonFixturesBundle\Services\Helpers;
 
-class JsonHelper 
+class JsonHelper
 {
-    public function addDefaults($data) {
+
+    public function addDefaults($data)
+    {
         $defaults = [
-            'namespace'=>'',
-            'pkForce'=>false,
-            'mode'=>'replace',
-            'entries'=>[],
+            'namespace' => '',
+            'pkForce' => false,
+            'mode' => 'replace',
+            'entries' => [],
+            'dependencies' => [],
         ];
 
-        foreach($defaults as $key=>$def) {
-            if(!isset($data->$key)) {
+        foreach ($defaults as $key => $def) {
+            if (!isset($data->$key)) {
                 $data->$key = $def;
             }
         }

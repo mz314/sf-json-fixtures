@@ -3,14 +3,10 @@
 namespace MZ314\JSonFixturesBundle\Services;
 
 use MZ314\JSonFixturesBundle\Exception\JSONParseException;
-use MZ314\JSonFixturesBundle\Tests\Entity\TestEntity;
+use MZ314\JSonFixturesBundle\Exception\JsonLoadException;
 use MZ314\JSonFixturesBundle\Services\Helpers\JsonHelper;
 
-/**
- * TODO:
- * add dependency param and/or next in json fixture to chain fixtures
- * move addDefaults method so it will be available for dumper too
- */
+
 class LoaderService
 {
     protected $em;
@@ -47,6 +43,14 @@ class LoaderService
         return $this->loadJsonData($json);
     }
 
+    protected function processDependencies($data)
+    {
+        foreach ($data->dependencies as $dependency) {
+            $json = $this->loadJsonFile($dependency);
+            $this->loadFromObject($json);
+        }
+    }
+
     public function loadFromObject($data)
     {
         $nsPrefix = '';
@@ -58,10 +62,13 @@ class LoaderService
         $entityClassName = $nsPrefix.$data->entityName;
 
         if ($data->mode == 'replace') {
-
+            //TODO
         }
 
 
+        if (isset($data->dependencies) && count($data->dependencies) > 0) {
+            $this->processDependencies($data);
+        }
 
         foreach ($data->entries as $entry) {
             $entryArr = (array) $entry;
@@ -77,9 +84,14 @@ class LoaderService
                     $mapping          = $metadata->getAssociationMapping($key);
                     $refColName       = $mapping['joinColumns'][0]['referencedColumnName'];
                     $targetRepository = $this->em->getRepository($mapping['targetEntity']);
-                    $value            = $targetRepository->findOneBy([
+
+                    $value = $targetRepository->findOneBy([
                         $refColName => $val,
                     ]);
+
+                    if (!$value) {
+                        throw new JsonLoadException("Reladed entity doesn't exist");
+                    }
                 }
 
                 $reflection = new \ReflectionProperty(get_class($entity), $key);
@@ -92,6 +104,7 @@ class LoaderService
             }
 
             $this->em->persist($entity);
+            $this->em->flush();
         }
     }
 
