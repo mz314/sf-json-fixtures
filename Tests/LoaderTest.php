@@ -1,9 +1,9 @@
 <?php
 
-namespace MZ314\JSonFixturesBundle\Tests;
+namespace MZ314\JsonFixturesBundle\Tests;
 
-use MZ314\JSonFixturesBundle\Services\LoaderService;
-use MZ314\JSonFixturesBundle\Services\Helpers\JsonHelper;
+use MZ314\JsonFixturesBundle\Services\LoaderService;
+use MZ314\JsonFixturesBundle\Services\Helpers\JsonHelper;
 
 class LoaderTest extends BaseTestCase
 {
@@ -14,7 +14,7 @@ class LoaderTest extends BaseTestCase
 
         //TODO: get service using application->container->get
 
-        $this->loader = new LoaderService($this->em, new JsonHelper());
+        $this->loader =  $this->container->get('jsonfixtures.loader'); //new LoaderService($this->em, new JsonHelper());
     }
 
     public function testLoaderParsing()
@@ -22,7 +22,7 @@ class LoaderTest extends BaseTestCase
         $json = file_get_contents(__DIR__.'/json/TestEntitySimpleReplace.json');
         $data = $this->loader->loadJsonData($json);
         $this->assertEquals($data->namespace,
-            'MZ314\JSonFixturesBundle\Tests\Entity');
+            'MZ314\JsonFixturesBundle\Tests\Entity');
         $this->assertEquals($data->entityName, 'TestEntity');
         $this->assertEquals($data->mode, 'replace');
         $this->assertEquals(count($data->entries), 2);
@@ -46,7 +46,7 @@ class LoaderTest extends BaseTestCase
         $this->loader->loadFromJson($json);
         $this->em->flush();
 
-        $loaded = $this->em->getRepository('JSonFixturesBundle:TestEntity')->findAll();
+        $loaded = $this->em->getRepository('JsonFixturesBundle:TestEntity')->findAll();
         $this->assertEquals(count($loaded), 2);
         $this->assertEquals(6, $loaded[0]->getId());
         $this->assertEquals('test1', $loaded[0]->getName());

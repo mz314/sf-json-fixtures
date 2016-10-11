@@ -1,10 +1,10 @@
 <?php
 
-namespace MZ314\JSonFixturesBundle\Tests;
+namespace MZ314\JsonFixturesBundle\Tests;
 
 use Symfony\Component\Console\Tester\CommandTester;
-use MZ314\JSonFixturesBundle\Services\LoaderService;
-use MZ314\JSonFixturesBundle\Services\Helpers\JsonHelper;
+use MZ314\JsonFixturesBundle\Services\LoaderService;
+use MZ314\JsonFixturesBundle\Services\Helpers\JsonHelper;
 
 class LoadCommandTest extends BaseTestCase
 {
@@ -12,7 +12,7 @@ class LoadCommandTest extends BaseTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->application->add(new \MZ314\JSonFixturesBundle\Commands\LoadCommand());
+        $this->application->add(new \MZ314\JsonFixturesBundle\Commands\LoadCommand());
     }
 
     public function testCommand()
@@ -27,7 +27,7 @@ class LoadCommandTest extends BaseTestCase
             ]
         );
 
-        $testRepository = $this->em->getRepository('JSonFixturesBundle:TestEntity');
+        $testRepository = $this->em->getRepository('JsonFixturesBundle:TestEntity');
 
         $entities = $testRepository->findAll();
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace MZ314\JSonFixturesBundle\Services;
+namespace MZ314\JsonFixturesBundle\Services;
 
-use MZ314\JSonFixturesBundle\Services\Helpers\JsonHelper;
+use MZ314\JsonFixturesBundle\Services\Helpers\JsonHelper;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 /**

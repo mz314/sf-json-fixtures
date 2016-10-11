@@ -1,16 +1,18 @@
 services:
     
     jsonfixtures.loader:
-       class: MZ314\JSonFixturesBundle\Services\LoaderService
+       class: MZ314\JsonFixturesBundle\Services\LoaderService
        arguments:
            - "@doctrine.orm.entity_manager"
            - '@jsonfixtures.format.json'
+#       calls:
+#            - [setParameterBag, ["@=service('kernel').getContainer().getParameterBag()"]]   
            
     jsonfixtures.dumper:
-        class: MZ314\JSonFixturesBundle\Services\DumperService
+        class: MZ314\JsonFixturesBundle\Services\DumperService
         arguments:
             - "@doctrine.orm.entity_manager"
             - "@jsonfixtures.format.json"
 
     jsonfixtures.format.json:
-       class: MZ314\JSonFixturesBundle\Services\Helpers\JsonHelper
+       class: MZ314\JsonFixturesBundle\Services\Helpers\JsonHelper

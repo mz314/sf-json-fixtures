@@ -23,9 +23,9 @@
 
     "autoload": {
         "psr-0": {
-            "MZ314\\JSonFixturesBundle": ""
+            "MZ314\\JsonFixturesBundle": ""
         }
     },
 
-    "target-dir": "MZ314/JSonFixturesBundle"
+    "target-dir": "MZ314/JsonFixturesBundle"
 }

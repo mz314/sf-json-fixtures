@@ -1,11 +1,11 @@
 <?php
 
-namespace MZ314\JSonFixturesBundle\Services;
+namespace MZ314\JsonFixturesBundle\Services;
 
-use MZ314\JSonFixturesBundle\Exception\JSONParseException;
-use MZ314\JSonFixturesBundle\Exception\JsonLoadException;
-use MZ314\JSonFixturesBundle\Services\Helpers\JsonHelper;
-
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use MZ314\JsonFixturesBundle\Exception\JSONParseException;
+use MZ314\JsonFixturesBundle\Exception\JsonLoadException;
+use MZ314\JsonFixturesBundle\Services\Helpers\JsonHelper;
 
 class LoaderService
 {
@@ -16,6 +16,11 @@ class LoaderService
         $this->em         = $em;
         $this->jsonHelper = $jsonHelper;
     }
+
+//    public function setParameterBag($params)
+//    {
+//        $this->parameterBag = $params;
+//    }
 
     public function loadJsonData($json)
     {

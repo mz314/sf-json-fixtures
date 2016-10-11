@@ -1,6 +1,6 @@
 <?php
 
-namespace MZ314\JSonFixturesBundle\Tests;
+namespace MZ314\JsonFixturesBundle\Tests;
 
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
@@ -17,7 +17,7 @@ class AppKernel extends Kernel
 
         $bundles[] = new FrameworkBundle();
         $bundles[] = new \Doctrine\Bundle\DoctrineBundle\DoctrineBundle();
-        $bundles[] = new \MZ314\JSonFixturesBundle\JSonFixturesBundle();
+        $bundles[] = new \MZ314\JsonFixturesBundle\JsonFixturesBundle();
 
 
         return $bundles;

@@ -1,8 +1,8 @@
 <?php
 
-namespace MZ314\JSonFixturesBundle\Exception;
+namespace MZ314\JsonFixturesBundle\Exception;
 
-interface JSonFixturesBundleExceptionInterface
+interface JsonFixturesBundleExceptionInterface
 {
 }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace MZ314\JSonFixturesBundle\Tests\Entity;
+namespace MZ314\JsonFixturesBundle\Tests\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 class ManyToOneA extends BaseTestEntity
 {
     /**
-     * @ORM\ManyToOne(targetEntity="MZ314\JSonFixturesBundle\Tests\Entity\ManyToOneB", inversedBy="relA")
+     * @ORM\ManyToOne(targetEntity="MZ314\JsonFixturesBundle\Tests\Entity\ManyToOneB", inversedBy="relA")
      */
     protected $relM;
 

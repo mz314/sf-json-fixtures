@@ -1,9 +1,9 @@
 <?php
 
-namespace MZ314\JSonFixturesBundle\Exception;
+namespace MZ314\JsonFixturesBundle\Exception;
 
 
-class JsonLoadException extends \Exception implements JSonFixturesBundleExceptionInterface
+class JsonLoadException extends \Exception implements JsonFixturesBundleExceptionInterface
 {
     public function __construct($message, $code=null, $previous=null)
     {

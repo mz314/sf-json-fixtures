@@ -1,6 +1,6 @@
 <?php
 
-namespace MZ314\JSonFixturesBundle\Services\Helpers;
+namespace MZ314\JsonFixturesBundle\Services\Helpers;
 
 class JsonHelper
 {

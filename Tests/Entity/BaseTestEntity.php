@@ -1,6 +1,6 @@
 <?php
 
-namespace MZ314\JSonFixturesBundle\Tests\Entity;
+namespace MZ314\JsonFixturesBundle\Tests\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 

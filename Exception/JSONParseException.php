@@ -1,8 +1,8 @@
 <?php
 
-namespace MZ314\JSonFixturesBundle\Exception;
+namespace MZ314\JsonFixturesBundle\Exception;
 
-class JSONParseException extends \Exception implements JSonFixturesBundleExceptionInterface
+class JSONParseException extends \Exception implements JsonFixturesBundleExceptionInterface
 {
     public function __construct($json, $code=null, $previous=null)
     {

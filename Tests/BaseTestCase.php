@@ -1,7 +1,7 @@
 <?php
 //http://stackoverflow.com/questions/27501321/functionnal-tests-inside-a-standalone-symfony2s-bundle
 
-namespace MZ314\JSonFixturesBundle\Tests;
+namespace MZ314\JsonFixturesBundle\Tests;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Console\Application;

@@ -11,11 +11,15 @@ doctrine:
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         mappings:
-            JSonFixturesBundle:
+            JsonFixturesBundle:
                 mapping: true
                 type: annotation
                 dir: 'Tests/Entity'
-                alias: 'JSonFixturesBundle'
-                prefix: 'MZ314\JSonFixturesBundle\Tests\Entity'
+                alias: 'JsonFixturesBundle'
+                prefix: 'MZ314\JsonFixturesBundle\Tests\Entity'
                 is_bundle: true
+                
+json_fixtures:
+    fixture_dir: 'fixture dir here'
+
         
