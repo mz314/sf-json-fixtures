@@ -17,8 +17,12 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->scalarNode('fixture_dir')
+                ->scalarNode('fixtures_dir')
+                    ->isRequired()
+                    ->cannotBeEmpty()
                 ->end()
+                ->scalarNode('default_output')
+                ->defaultValue('stdout')
             ->end();
 
 //            ->children()

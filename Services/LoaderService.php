@@ -7,7 +7,7 @@ use MZ314\JsonFixturesBundle\Exception\JSONParseException;
 use MZ314\JsonFixturesBundle\Exception\JsonLoadException;
 use MZ314\JsonFixturesBundle\Services\Helpers\JsonHelper;
 
-class LoaderService
+class LoaderService 
 {
     protected $em;
 
@@ -17,10 +17,7 @@ class LoaderService
         $this->jsonHelper = $jsonHelper;
     }
 
-//    public function setParameterBag($params)
-//    {
-//        $this->parameterBag = $params;
-//    }
+    
 
     public function loadJsonData($json)
     {

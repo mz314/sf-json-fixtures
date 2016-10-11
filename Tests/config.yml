@@ -20,6 +20,6 @@ doctrine:
                 is_bundle: true
                 
 json_fixtures:
-    fixture_dir: 'fixture dir here'
+    fixtures_dir: %kernel.root_dir%/json_testdumps
 
         

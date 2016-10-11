@@ -24,6 +24,8 @@ class JsonFixturesExtension extends Extension
 
         $loader->load('services.yml');
 
+        $loaderServiceDef = $container->getDefinition('jsonfixtures.config');
+        $loaderServiceDef->addMethodCall('setConfig', [$config]);
 
     }
 }

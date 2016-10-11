@@ -14,5 +14,9 @@ services:
             - "@doctrine.orm.entity_manager"
             - "@jsonfixtures.format.json"
 
+    jsonfixtures.config:
+        class: MZ314\JsonFixturesBundle\Services\ConfigService
+    
+    
     jsonfixtures.format.json:
        class: MZ314\JsonFixturesBundle\Services\Helpers\JsonHelper
