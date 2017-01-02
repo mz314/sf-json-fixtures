@@ -43,6 +43,8 @@ class DumperTest extends BaseTestCase
         $json1 = $this->dumper->dumpRepositoryToJson($this->em->getRepository('JsonFixturesBundle:TestEntity'));
         $json2 = $this->dumper->dumpRepositoryToJson('JsonFixturesBundle:TestEntity');
         
+        $this->assertEquals($json1, $json2);
+        
         $data = json_decode($json1);
 
         $this->assertEquals($data->entityName, 'TestEntity');
