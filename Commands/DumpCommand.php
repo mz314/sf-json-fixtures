@@ -13,6 +13,9 @@ class DumpCommand extends ContainerAwareCommand
 
     protected function configure()
     {
+        
+        parent::configure();
+        
         // TODO entity arg. optional, when not supplied ALL
         $this
             ->setName('json-fixtures:dump')
