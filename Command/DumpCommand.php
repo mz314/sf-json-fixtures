@@ -1,6 +1,6 @@
 <?php
 
-namespace MZ314\JsonFixturesBundle\Commands;
+namespace MZ314\JsonFixturesBundle\Command;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

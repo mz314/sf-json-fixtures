@@ -13,7 +13,7 @@ class DumpCommandTest extends BaseTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->application->add(new \MZ314\JsonFixturesBundle\Commands\DumpCommand());
+        $this->application->add(new \MZ314\JsonFixturesBundle\Command\DumpCommand());
         $this->loader = new LoaderService($this->em, new JsonHelper());
         $json = file_get_contents(__DIR__.'/json/TestEntitySimpleReplace.json');
         $this->loader->loadFromJson($json);

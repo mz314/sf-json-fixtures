@@ -12,7 +12,7 @@ class LoadCommandTest extends BaseTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->application->add(new \MZ314\JsonFixturesBundle\Commands\LoadCommand());
+        $this->application->add(new \MZ314\JsonFixturesBundle\Command\LoadCommand());
     }
 
     public function testCommand()
