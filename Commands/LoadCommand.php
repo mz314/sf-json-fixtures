@@ -13,6 +13,7 @@ class LoadCommand extends ContainerAwareCommand
 
     protected function configure()
     {
+        parent::configure();
 
         $this
             ->setName('json-fixtures:load')
