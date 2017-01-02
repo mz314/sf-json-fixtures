@@ -1,0 +1,11 @@
+{
+ "namespace": "MZ314:JsonFixturesBundle:Tests:Entity",
+ "entityName": "TestEntity",
+ "mode": "replace",
+ "pkForce": true,
+ "pkName": "id",
+ "entries":  [
+     {"id":6, "name": "test1"},
+     {"id":7, "name": "test2"}
+ ]
+}

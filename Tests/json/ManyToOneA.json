@@ -1,0 +1,16 @@
+{
+ "namespace": "MZ314:JsonFixturesBundle:Tests:Entity",
+ "entityName": "ManyToOneA",
+ "mode": "replace",
+ "pkForce": true,
+ "pkName": "id",
+ "dependencies": [
+     "Tests/json/ManyToOneB.json"
+ ],
+ "entries":  [
+     {"id":1, "name": "rel1A", "relM": 1},
+     {"id":2, "name": "rel2A", "relM": 1},
+     {"id":3, "name": "rel3A"},
+     {"id":4, "name": "rel3A"}
+ ]
+}
