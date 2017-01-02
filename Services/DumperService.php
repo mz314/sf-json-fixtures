@@ -7,7 +7,6 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use MZ314\JsonFixturesBundle\Exception\EmptyTableException;
 
-
 class DumperService
 {
 
@@ -39,7 +38,6 @@ class DumperService
         $data = new \stdClass();
 
         if (count($entities) == 0) {
-            //return "";
             throw new EmptyTableException();
         }
 
@@ -60,11 +58,11 @@ class DumperService
 
     public function dumpRepositoryToJson($repository)
     {
-        
-        if(is_string($repository)) {
+
+        if (is_string($repository)) {
             $repository = $this->em->getRepository($repository);
         }
-        
+
         $entities = $repository
             ->createQueryBuilder('e')
             ->getQuery()
