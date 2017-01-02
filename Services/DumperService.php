@@ -5,9 +5,9 @@ namespace MZ314\JsonFixturesBundle\Services;
 use MZ314\JsonFixturesBundle\Services\Helpers\JsonHelper;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
-/**
- * TODO: add method using entitymanager and taking entity name as param
- */
+use MZ314\JsonFixturesBundle\Exception\EmptyTableException;
+
+
 class DumperService
 {
 
@@ -38,10 +38,11 @@ class DumperService
     {
         $data = new \stdClass();
 
-        if(count($entities) == 0) {
-            return "";
+        if (count($entities) == 0) {
+            //return "";
+            throw new EmptyTableException();
         }
-        
+
         $reflection = new \ReflectionClass(get_class($entities[0]));
 
         $data->entityName = $reflection->getShortName();
@@ -56,13 +57,19 @@ class DumperService
 
         return $json;
     }
-    
-    public function dumpRepositoryToJson(EntityRepository $repository) {
-        //TODO: use custom select * to prevent from using overriden findAll 
-        $entities = $repository->findAll(); 
+
+    public function dumpRepositoryToJson($repository)
+    {
         
-        if(count($entities)>0) {
-            $this->dumpArrayToJson($entities);
+        if(is_string($repository)) {
+            $repository = $this->em->getRepository($repository);
         }
+        
+        $entities = $repository
+            ->createQueryBuilder('e')
+            ->getQuery()
+            ->getResult();
+
+        return $this->dumpArrayToJson($entities);
     }
 }

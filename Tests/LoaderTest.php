@@ -12,35 +12,32 @@ class LoaderTest extends BaseTestCase
     {
         parent::setUp();
 
-        //TODO: get service using application->container->get
-
-        $this->loader =  $this->container->get('jsonfixtures.loader'); //new LoaderService($this->em, new JsonHelper());
+        $this->loader = $this->container->get('jsonfixtures.loader'); 
     }
 
     public function testLoaderParsing()
     {
-        $json = file_get_contents(__DIR__.'/json/TestEntitySimpleReplace.json');
+        $json = file_get_contents(__DIR__ . '/json/TestEntitySimpleReplace.json');
         $data = $this->loader->loadJsonData($json);
-        $this->assertEquals($data->namespace,
-            'MZ314\JsonFixturesBundle\Tests\Entity');
+        $this->assertEquals($data->namespace, 'MZ314\JsonFixturesBundle\Tests\Entity');
         $this->assertEquals($data->entityName, 'TestEntity');
         $this->assertEquals($data->mode, 'replace');
         $this->assertEquals(count($data->entries), 2);
         $this->assertTrue(is_array($data->entries));
-        $a    = ["id" => 6, "name" => "test1"];
-        $b    = ["id" => 7, "name" => "test2"];
+        $a = ["id" => 6, "name" => "test1"];
+        $b = ["id" => 7, "name" => "test2"];
         $this->assertEquals($data->entries, [(object) $a, (object) $b]);
     }
 
     public function testLoaderFileLoading()
     {
-        $data = $this->loader->loadJsonFile(__DIR__.'/json/TestEntitySimpleReplace.json');
+        $data = $this->loader->loadJsonFile(__DIR__ . '/json/TestEntitySimpleReplace.json');
         $this->assertFalse(is_null($data));
     }
 
     public function testLoading()
     {
-        $json = file_get_contents(__DIR__.'/json/TestEntitySimpleReplace.json');
+        $json = file_get_contents(__DIR__ . '/json/TestEntitySimpleReplace.json');
 
 
         $this->loader->loadFromJson($json);
@@ -71,8 +68,8 @@ class LoaderTest extends BaseTestCase
 
     public function testRelated()
     {
-        $jsonA = file_get_contents(__DIR__.'/json/ManyToOneANodeps.json');
-        $jsonB = file_get_contents(__DIR__.'/json/ManyToOneB.json');
+        $jsonA = file_get_contents(__DIR__ . '/json/ManyToOneANodeps.json');
+        $jsonB = file_get_contents(__DIR__ . '/json/ManyToOneB.json');
 
         $this->loader->loadFromJson($jsonB);
         $this->em->flush();
@@ -83,8 +80,17 @@ class LoaderTest extends BaseTestCase
 
     public function testDependencies()
     {
-        $jsonA = file_get_contents(__DIR__.'/json/ManyToOneA.json');
+        $jsonA = file_get_contents(__DIR__ . '/json/ManyToOneA.json');
         $this->loader->loadFromJson($jsonA);
         $this->em->flush();
+    }
+
+    public function testExceptions()
+    {
+        $this->expectException(\MZ314\JsonFixturesBundle\Exception\JSONParseException::class);
+        
+        $this
+            ->loader
+            ->loadJsonData(null);
     }
 }
