@@ -81,7 +81,7 @@ class LoaderService
             foreach ($entryArr as $key => $val) {
 
                 $value = $val;
-
+                
                 if (!$metadata->getTypeOfField($key)) {
                     $mapping          = $metadata->getAssociationMapping($key);
                     $refColName       = $mapping['joinColumns'][0]['referencedColumnName'];
@@ -94,8 +94,15 @@ class LoaderService
                     if (!$value) {
                         throw new JsonLoadException("Reladed entity doesn't exist");
                     }
+                } else {
+                    $type = $metadata->getTypeOfField($key);
+                    if($type=="datetime") {
+                        $datetime = new \DateTime($value->date);
+                        $datetime->setTimezone(new \DateTimeZone($value->timezone));
+                        $value = $datetime;
+                    }
                 }
-
+                
                 $reflection = new \ReflectionProperty(get_class($entity), $key);
                 $reflection->setAccessible(true);
                 $reflection->setValue($entity, $value);
